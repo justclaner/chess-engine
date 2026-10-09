@@ -20,4 +20,4 @@ To set up the API for use in a terminal:
 
 ## Contributing
 
-Just make a pull request with details about the changes being made. If you wan't to contribute to greater changes, please contact me at `justclaner@gmail.com`.
+Just make a pull request with details about the changes being made. If you want to contribute to greater changes, please contact me at `justclaner@gmail.com`.
