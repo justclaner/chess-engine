@@ -9,7 +9,8 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
-    "rewriteRelativeImportExtensions": true
+    "rewriteRelativeImportExtensions": true,
+    "lib": ["DOM", "DOM.Iterable", "ES2025"]
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules", "dist"]

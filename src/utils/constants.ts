@@ -2,21 +2,21 @@ import type * as Chess from "./types.ts";
 
 export type PieceRegistry = Map<Chess.PieceKind, Chess.PieceBehavior>;
 
-const ORTHOGONAL: Chess.Vec[] = [
+const ORTHOGONAL: Chess.Vector[] = [
   { dx: 1, dy: 0 },
   { dx: -1, dy: 0 },
   { dx: 0, dy: 1 },
   { dx: 0, dy: -1 },
 ];
 
-const DIAGONAL: Chess.Vec[] = [
+const DIAGONAL: Chess.Vector[] = [
   { dx: 1, dy: 1 },
   { dx: 1, dy: -1 },
   { dx: -1, dy: 1 },
   { dx: -1, dy: -1 },
 ];
 
-const KNIGHT_OFFSETS: Chess.Vec[] = [
+const KNIGHT_OFFSETS: Chess.Vector[] = [
   { dx: 1, dy: 2 },
   { dx: 2, dy: 1 },
   { dx: 2, dy: -1 },
@@ -27,7 +27,7 @@ const KNIGHT_OFFSETS: Chess.Vec[] = [
   { dx: -1, dy: 2 },
 ];
 
-export const STANDARD_KINDS = new Set<string>([
+export const STANDARD_KINDS: Set<string> = new Set<string>([
   "king",
   "queen",
   "rook",
@@ -36,7 +36,11 @@ export const STANDARD_KINDS = new Set<string>([
   "pawn",
 ]);
 
-export const STANDARD_PIECES: PieceRegistry = new Map<
+export const CUSTOM_KINDS: Set<string> = new Set<string>([]);
+
+export const ALL_KINDS: Set<string> = STANDARD_KINDS.union(CUSTOM_KINDS);
+
+export const PIECE_REGISTRY: PieceRegistry = new Map<
   Chess.PieceKind,
   Chess.PieceBehavior
 >([
@@ -55,11 +59,17 @@ export const STANDARD_PIECES: PieceRegistry = new Map<
     "queen",
     {
       kind: "queen",
-      moves: [{ kind: "slide", dirs: [...ORTHOGONAL, ...DIAGONAL] }],
+      moves: [{ kind: "slide", directions: [...ORTHOGONAL, ...DIAGONAL] }],
     },
   ],
-  ["rook", { kind: "rook", moves: [{ kind: "slide", dirs: ORTHOGONAL }] }],
-  ["bishop", { kind: "bishop", moves: [{ kind: "slide", dirs: DIAGONAL }] }],
+  [
+    "rook",
+    { kind: "rook", moves: [{ kind: "slide", directions: ORTHOGONAL }] },
+  ],
+  [
+    "bishop",
+    { kind: "bishop", moves: [{ kind: "slide", directions: DIAGONAL }] },
+  ],
   [
     "knight",
     { kind: "knight", moves: [{ kind: "leap", offsets: KNIGHT_OFFSETS }] },
@@ -80,7 +90,7 @@ export const STANDARD_PIECES: PieceRegistry = new Map<
         // Move generator should dedupe against the single step above.
         {
           kind: "slide",
-          dirs: [{ dx: 0, dy: 1 }],
+          directions: [{ dx: 0, dy: 1 }],
           maxRange: 2,
           mode: "move",
           firstMoveOnly: true,

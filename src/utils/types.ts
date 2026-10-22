@@ -2,8 +2,8 @@
 
 export type Color = "white" | "black";
 
-export type Pos = { x: number; y: number };
-export type Vec = { dx: number; dy: number };
+export type Coordinate = { x: number; y: number };
+export type Vector = { dx: number; dy: number };
 
 // ---------- Pieces ----------
 
@@ -19,15 +19,15 @@ export type PieceKind = StandardKind | (string & {});
 
 export type Move = {
   piece: Piece;
-  initial: Pos;
-  final: Pos;
+  initial: Coordinate;
+  final: Coordinate;
   capture: boolean;
 };
 
 export type MoveRule = StandardRule | CustomRule;
 export type StandardRule = (
-  | { kind: "leap"; offsets: Vec[] } // jump to pos + offset, ignoring pieces between
-  | { kind: "slide"; dirs: Vec[]; maxRange?: number } // step until edge/blocker/piece
+  | { kind: "leap"; offsets: Vector[] } // jump to pos + offset, ignoring pieces between
+  | { kind: "slide"; directions: Vector[]; maxRange?: number } // step until edge/blocker/piece
 ) & {
   mode?: "move" | "capture" | "both"; // default "both"
   firstMoveOnly?: boolean; // only valid while piece.hasMoved is falsy
@@ -58,7 +58,7 @@ export type TerrainKind = "normal" | "blocked"; // extend: "portal", "hazard", .
 export type Tile = {
   terrain: TerrainKind;
   piece: Piece | null;
-  coordinate: Pos;
+  coordinate: Coordinate;
 };
 
 export type Board = {
